@@ -3,6 +3,128 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section scripts{
+    @Scripts.Render("~/bundles/angularPostSystemModule")
 
+    <script type="text/javascript">
+        angular.module("app", ['ngAnimate', "ui.bootstrap", "post"])
+    </script>
+}
 
-<h2>Tu będzie piekna aplikacja</h2>
+<div data-ng-app="app">
+    <div class="col-md-12" data-ng-controller="post.PostController as vm">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Post System</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-left">
+                    <li class="dropdown" >
+                        <a id="dropdownMenu1" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Szablony <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                            <li role="presentation" data-ng-repeat="(name,template) in vm.templates">
+                                <a role="menuitem" tabindex="-1" href="#" data-ng-click="vm.loadTemplate(template)">test</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <br />
+        <br />
+        <br />
+
+        <accordion close-others="false">
+            <accordion-group is-open="vm.options.isFirstOpen">
+                <accordion-heading>
+                    <span>Przejscia maszyny</span>
+                    <button type="button" class="btn btn-success" data-ng-disabled="!statesForm.$valid" data-ng-show="vm.options.isFirstOpen" data-ng-click="vm.addState($event)">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        Dodaj przejście
+                    </button>
+                </accordion-heading>
+                <form name="statesForm">
+                    <div class="row" ng-repeat="state in vm.states">
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label>Z:</label>
+                                <input name="from_{{$index}}" type="text" class="form-control" data-ng-model="state.from" required />
+                                <br />
+                                <span class="field-validation-error" ng-show="vm.options.showValidationErrors && statesForm['from_'+$index].$error.required">
+                                    Pole nie może być puste
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <label>Do:</label>
+                                <input name="to_{{$index}}" type="text" class="form-control" data-ng-model="state.to" required />
+                                <br />
+                                <span class="field-validation-error" ng-show="vm.options.showValidationErrors && statesForm['to_'+$index].$error.required">
+                                    Pole nie może być puste
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-control" data-ng-model="state.isStarting" data-ng-change="vm.setStartingState(state)" />
+                                <label>Czy to start ?</label>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-danger" data-ng-click="vm.removeState(state)">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </accordion-group>
+
+            <accordion-group is-open="vm.options.isSecondOpen" is-disabled="vm.isSystemDisabled()">
+                <accordion-heading>
+                    <span>Maszyna</span>
+                </accordion-heading>
+                <div class="row">
+                    <button type="button" class="btn btn-default" data-ng-click="vm.systemStop()">
+                        <span class="glyphicon glyphicon glyphicon-stop"></span>
+                    </button>
+                    <button type="button" class="btn btn-default" data-ng-click="vm.systemToggle()">
+                        <span class="glyphicon glyphicon glyphicon-play" data-ng-class="{'glyphicon-play' : !vm.isSystemStart(),'glyphicon-pause' : vm.isSystemStart() }"></span>
+                    </button>
+                    <button type="button" class="btn btn-default" data-ng-click="vm.systemNext()">
+                        <span class="glyphicon glyphicon glyphicon-step-forward"></span>
+                    </button>
+                </div>
+                <div class="row">
+                    <table>
+                        <tr>
+                            <td data-ng-repeat="step in vm.system.steps" colspan="{{vm.getStepFromColspan(step)}}">
+                                {{vm.getStateIndex(step)+1}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td data-ng-repeat="step in vm.system.steps" colspan="{{vm.getStepFromColspan(step)}}">
+                                {{step.from}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td data-ng-repeat="step in vm.system.steps" colspan="{{vm.getStepToColspan(step)}}">
+                                {{step.to}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td data-ng-repeat="step in vm.system.steps" colspan="{{vm.getStepToColspan(step)}}">
+                                {{vm.getStateIndex(step)+1}}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </accordion-group>
+        </accordion>
+    </div>
+</div>
