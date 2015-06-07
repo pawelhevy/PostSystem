@@ -39,7 +39,7 @@ module post {
             playInterval: -1,
         };
         templates = {
-            "Maszyna akceptująca słowa kończące się na a dla słowa ab": '[{"to":"B0*a*b*B1*","from":"B0","isStarting":true},{"from":"*B1*a","to":"B1*"},{"from":"*B1*b","to":"B2*"},{"from":"*B1*#","to":"B1*"},{"from":"*B1*e","isEnd":true,"to":"B3"},{"from":"*B2","to":"b*B1*"},{"from":"*a","to":"a*"},{"from":"*b","to":"b*"},{"from":"*#","to":"#*"}]'
+            "Maszyna akceptująca słowa kończące się na a dla słowa ab": '[{"to":"B0*a*b*B1*","from":"B0","isStarting":true},{"from":"*B1*a","to":"B1*"},{"from":"*B1*b","to":"B2*"},{"from":"*B1*#","to":"B1*"},{"from":"*B1*e","isEnding":true,"to":"B3"},{"from":"*B2","to":"b*B1*"},{"from":"*a","to":"a*"},{"from":"*b","to":"b*"},{"from":"*#","to":"#*"}]'
         }
 
         public static $inject = ['$scope', '$cookies', 'ngToastr'];
@@ -76,12 +76,20 @@ module post {
         }
 
         addState = ($event) => {
+            this.systemStop();
             this.stopEvent($event);
             this.states.push(<PostModel> {});
         }
 
         removeState = (state: PostModel) => {
+            this.systemStop();
             this.states.splice(this.getStateIndex(state), 1);
+        }
+
+        clearStates = ($event) => {
+            this.systemStop();
+            this.stopEvent($event);
+            this.states = new Array<PostModel>();
         }
 
         getStateIndex = (state: PostModel) => {
@@ -89,6 +97,7 @@ module post {
         }
 
         setStartingState = (state: PostModel) => {
+            this.systemStop();
             angular.forEach(this.states, (st) => {
                 st.isStarting = false;
             });
@@ -173,6 +182,15 @@ module post {
                 this.system.steps.push(matchedStates[0]);
             }
             this.systemDetectLoop();
+            this.systemCheckEnd();
+        }
+
+        systemCheckEnd = () => {
+            var lastStep = this.system.steps[this.system.steps.length - 1];
+            if (!!lastStep && lastStep.isEnding) {
+                this.systemPause();
+                this.toastr.getToastr().success("Maszyna dotarła do końca");
+            }
         }
 
         systemDetectLoop = () => {

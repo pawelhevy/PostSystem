@@ -51,6 +51,10 @@
                         <span class="glyphicon glyphicon-plus"></span>
                         Dodaj przejście
                     </button>
+                    <button type="button" class="btn btn-danger" data-ng-disabled="!vm.hasStates()" data-ng-show="vm.options.isFirstOpen" data-ng-click="vm.clearStates($event)">
+                        <span class="glyphicon glyphicon-trash"></span>
+                        Usuń wszystkie
+                    </button>
                 </accordion-heading>
                 <form name="statesForm">
                     <div class="row" ng-repeat="state in vm.states">
@@ -74,6 +78,10 @@
                             <div class="form-group">
                                 <input type="checkbox" class="form-control" data-ng-model="state.isStarting" data-ng-change="vm.setStartingState(state)" />
                                 <label>Czy to start ?</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-control" data-ng-model="state.isEnding" />
+                                <label>Czy to koniec ?</label>
                             </div>
                             <div class="form-group">
                                 <button type="button" class="btn btn-danger" data-ng-click="vm.removeState(state)">

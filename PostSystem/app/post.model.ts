@@ -5,5 +5,6 @@ module post {
         from: string;
         to: string;
         isStarting: boolean;
+        isEnding: boolean;
     }
 } 
