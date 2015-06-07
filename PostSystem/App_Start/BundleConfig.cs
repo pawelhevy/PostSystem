@@ -11,6 +11,7 @@ namespace PostSystem
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/bootstrap.js",
+                        "~/Scripts/bootstrap-slider.js",
                         "~/Scripts/toastr.js"
                         ));
 
@@ -20,9 +21,11 @@ namespace PostSystem
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                         "~/Scripts/angular/angular.js",
+                        "~/Scripts/angular/angular-cookies.js",
                         "~/Scripts/angular/angular-animate.js",
                         "~/Scripts/angular-ui/ui-bootstrap.js",
-                        "~/Scripts/angular-ui/ui-bootstrap-tpls.js"
+                        "~/Scripts/angular-ui/ui-bootstrap-tpls.js",
+                        "~/Scripts/angular-ui/ui-slider.js"
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/angularPostSystemModule").Include(
@@ -41,6 +44,7 @@ namespace PostSystem
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/site.css",
                 "~/Content/bootstrap.css",
+                "~/Content/bootstrap-slider.css",
                 "~/Content/toastr.css",
                 "~/Content/postSystem.css"
                 ));

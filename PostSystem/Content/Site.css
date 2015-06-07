@@ -59,3 +59,40 @@ textarea {
 .validation-summary-valid {
     display: none;
 }
+[ng-cloak].splash {
+    display: block !important;
+    background-color: #F4F4F4;
+    color: black;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1111;
+}
+.splash {
+    display: none;
+}
+.splash div {
+     position: absolute;
+  left: 46%;
+  top: 40%;
+}
+.splash div > * {
+    float: left;
+    margin-left: 10px;
+}
+.glyphicon-refresh-animate {
+    -animation: spin 1 infinite linear;
+    -webkit-animation: spin2 1s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}

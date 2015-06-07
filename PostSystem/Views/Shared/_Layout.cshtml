@@ -5,13 +5,19 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
-        @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/modernizr")
     @RenderSection("styles", required: false)
 
-        @Scripts.Render("~/bundles/jquery", "~/bundles/angular")
-        @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/jquery", "~/bundles/angular")
+    @RenderSection("scripts", required: false)
 </head>
-<body>
+<body data-ng-app="app">
+    <div class="splash" ng-cloak="">
+        <div>
+            <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+            <p>Ładowanie...</p>
+        </div>
+    </div>
     @RenderBody()
 </body>
 </html>
