@@ -115,24 +115,24 @@
                 </div>
                 <br/>
                 <div class="col-md-12 system-content">
-                    <table>
+                    <table data-ng-repeat="machine in vm.system.machines track by $index" data-ng-class="{'success' : machine.isSuccessful}">
                         <tr>
-                            <td data-ng-repeat="step in vm.system.steps track by $index" colspan="{{vm.getStepFromColspan(step)}}">
+                            <td data-ng-repeat="step in machine.steps track by $index" colspan="{{vm.getStepFromColspan(step)}}">
                                 {{vm.getStateIndex(step)+1}}
                             </td>
                         </tr>
                         <tr>
-                            <td data-ng-repeat="str in vm.getStepSplittedArray(true) track by $index">
+                            <td data-ng-repeat="str in vm.getStepSplittedArray(machine.steps, true) track by $index">
                                 {{str}}
                             </td>
                         </tr>
                         <tr>
-                            <td data-ng-repeat="str in vm.getStepSplittedArray(false) track by $index">
+                            <td data-ng-repeat="str in vm.getStepSplittedArray(machine.steps,false) track by $index">
                                 {{str}}
                             </td>
                         </tr>
                         <tr>
-                            <td data-ng-repeat="step in vm.system.steps track by $index" colspan="{{vm.getStepToColspan(step)}}">
+                            <td data-ng-repeat="step in machine.steps track by $index" colspan="{{vm.getStepToColspan(step)}}">
                                 {{vm.getStateIndex(step)+1}}
                             </td>
                         </tr>

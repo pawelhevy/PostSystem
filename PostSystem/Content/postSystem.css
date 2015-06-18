@@ -2,6 +2,25 @@
     overflow: hidden;
     overflow-x: auto;
 }
+
+.system-content table {
+    float: left;
+    display: inline-table;
+    clear: both;
+      position: relative;
+  margin-left: 15px;
+}
+
+.system-content table.success::before {
+    content: "\e013";
+    color: greenyellow;
+    font-family: 'Glyphicons Halflings';
+      position: absolute;
+  left: -32px;
+  top: 22px;
+  font-size: 26px;
+}
+
 .system-content table tr:first-child td {
     border-bottom: 1px solid black;
     text-align: center;
